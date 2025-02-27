@@ -15,6 +15,14 @@ const OrderForm = () => {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
+    const calculateTotal = useCallback(() => {
+        let total = 0;
+        selectedProducts.forEach(product => {
+            total += product.price * (quantities[product.id] || 0);
+        });
+        setOrderTotal(total);
+    }, [selectedProducts, quantities]);
+    
     useEffect(() => {
         fetchCustomers();
         fetchProducts();
@@ -76,14 +84,6 @@ const OrderForm = () => {
         setSelectedProducts(updatedProducts);
         setQuantities(updatedQuantities);
     };
-
-    const calculateTotal = useCallback(() => {
-        let total = 0;
-        selectedProducts.forEach(product => {
-            total += product.price * (quantities[product.id] || 0);
-        });
-        setOrderTotal(total);
-    }, [selectedProducts, quantities]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
