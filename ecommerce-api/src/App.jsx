@@ -25,7 +25,7 @@ function App() {
         <Route path="/edit-product/:id" element={<ProductForm />} />
         <Route path="/products/" element={<ProductList />} />
 
-        <Route path="/place-order/" element={<OrderForm />} />
+        <Route path="/orders/" element={<OrderForm />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>
