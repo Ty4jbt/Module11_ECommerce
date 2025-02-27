@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Form, Button, Alert, Container, Row, Col, Card, ListGroup, Modal } from 'react-bootstrap';
@@ -22,7 +22,7 @@ const OrderForm = () => {
 
     useEffect(() => {
         calculateTotal();
-    }, [selectedProducts, quantities]);
+    }, [calculateTotal]);
 
     const fetchCustomers = async () => {
         try {
@@ -77,13 +77,13 @@ const OrderForm = () => {
         setQuantities(updatedQuantities);
     };
 
-    const calculateTotal = () => {
+    const calculateTotal = useCallback(() => {
         let total = 0;
         selectedProducts.forEach(product => {
             total += product.price * (quantities[product.id] || 0);
         });
         setOrderTotal(total);
-    };
+    }, [selectedProducts, quantities]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -127,7 +127,7 @@ const OrderForm = () => {
 
     const handleModalClose = () => {
         setShowSuccessModal(false);
-        selectedCustomer('');
+        setSelectedCustomer('');
         setSelectedProducts([]);
         setQuantities({});
         setOrderTotal(0);
