@@ -119,6 +119,7 @@ const OrderForm = () => {
             setShowSuccessModal(true);
         } catch (error) {
             setError('Error placing order: ' + error.message);
+            console.error(error);
         } finally {
             setIsLoading(false);
         }
